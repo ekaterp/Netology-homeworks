@@ -18,7 +18,6 @@ function solveEquation(a, b, c) {
 }
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
-  let totalAmount;
   const percentN = Number(percent);
   const contributionN = Number(contribution);
   const amountN = Number(amount);
@@ -35,23 +34,21 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
   }
 
-  let S = amount - contribution;
+  let S = amountN - contributionN;
   let P = percentN * 0.01 / 12;
 
-  let startDate = new Date();
-  let startYear = startDate.getFullYear();
-  let endYear = date.getFullYear();
-  let diffYear = endYear - startYear;
-
+  const startDate = new Date();
+  const startYear = startDate.getFullYear();
+  const endYear = date.getFullYear();
+  const diffYear = endYear - startYear;
+ 
   let n = diffYear * 12 - startDate.getMonth() + date.getMonth();
   if (startDate.getDate() > date.getDate()) {
     n = n - 1;
   }
 
-  let monthlyPayment = S * (P + (P / (((1 + P) ** n) - 1)));
-
-  totalAmount = Number((n * monthlyPayment).toFixed(2));
+  const monthlyPayment = S * (P + (P / (((1 + P) ** n) - 1)));
+  const totalAmount = Number((n * monthlyPayment).toFixed(2));
   console.log(totalAmount);
-
   return totalAmount;
 }
