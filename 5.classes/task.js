@@ -100,46 +100,40 @@ class Student {
         this.name = name;
         this.gender = gender;
         this.age = age;
-        this.marks = [{
-            subject:"",
-            arrmarks: [],
-            average: "",
-        }];
+        this.marks = {};
     }
-   
-    setSubject (subjectName) {
-        this.subject = subjectName;
-    }
-   
-    addMark (subjectName, mark) {
+
+    addMark(mark, subjectName) {
         if (mark < 1 || mark > 5) {
-            console.log ("Введена неверная оценка. Вводимое значение должно находится в диапазоне от 1 до 5 включительно")
+            throw Error("incorrect mark value" + mark + ", an integer from 1 to 5 expected.");
         }
-
-        if (this.marks[subject] === undefined) {
-            this.marks[subject] = [];
+        if (this.marks[subjectName] === undefined) {
+            this.marks[subjectName] = [];
         }
-        this.marks[subject].push(mark);
-    }
-    
-    addMarks (subject, ...marks) {
-        for (let m of marks) {
-          this.addMark(subject, m);
-         }
+        this.marks[subjectName].push(mark);
     }
 
-    getAverage (subject) {
-        return this.marks[subject].reduce ((acc, item, idx, arr) => { 
-          if (idx === arr.length -1) {
-            return (acc + item) / arr.length;
-          } else {
-            return acc + item;
-          }
-        }) 
+    getAverageBySubject(subjectName) {
+        const marks = this.marks[subjectName];
+        if (marks === undefined) {
+            throw Error("unknown subject name: " + subjectName);
+        }
+        if (marks.length === 0) {
+            return 0;
+        }
+        const sum = marks.reduce((a, b) => a + b, 0);
+        return sum / marks.length;
     }
 
-    getAverageBySubject () {
-
+    getAverage() {
+        if (this.marks.length == 0) {
+            return 0;
+        }
+        let sum = 0;
+        for (const subjectName of Object.keys(this.marks)) {
+            sum += this.getAverageBySubject(subjectName);
+        };
+        return sum / Object.keys(this.marks).length;
     }
 
 }
