@@ -121,7 +121,7 @@ class Student {
         if (marks.length === 0) {
             return 0;
         }
-        const sum = marks.reduce((a, b) => a + b, 0);
+        const sum = marks.reduce((acc, item) => acc + item);
         return sum / marks.length;
     }
 
