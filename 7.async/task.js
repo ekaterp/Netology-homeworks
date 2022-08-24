@@ -47,9 +47,9 @@ class AlarmClock {
     }
 
     stop() {
-        if (this.alarmId !== null) {
-            clearInterval(this.alarmId);
-            this.alarmId = null;
+        if (this.timerId !== null) {
+            clearInterval(this.timerId);
+            this.timerId = null;
         }
     }
 
