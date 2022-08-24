@@ -1,3 +1,5 @@
+"use strict";
+
 class AlarmClock {
     constructor () {
         this.alarmCollection = [];
@@ -32,14 +34,11 @@ class AlarmClock {
 
     start() {
         const checkClock = (alarm) => {
-            console.log(`Checking alarm ${alarm.alarmId} / ${alarm.alarmTime}`);
             if (this.getCurrentFormattedTime() === alarm.alarmTime) {
-                console.warn("Alarm occurred: " + alarm.alarmId);
                 alarm.funcName();
             }
         }
         if (this.timerId === null) {
-            console.log("Starting alarm interval");
             this.timerId = setInterval(() => {
                 this.alarmCollection.map(checkClock);
             }, 1000);
@@ -60,21 +59,18 @@ class AlarmClock {
     clearAlarms() {
         this.stop();
         this.alarmCollection = [];
-        this.alarmId = null;
+        this.timerId = null;
     }
 
 }
 
 function testCase() {
-    console.log("testcase start");
     let alarm = new AlarmClock();
-    console.log("staring alarm");
     alarm.start();
     alarm.addClock("23:39", () => {console.log("Доброе утро!")}, 1);
     alarm.addClock("23:39", () => {console.log("Подьем!"); alarm.removeClock(2)}, 2);
     alarm.addClock("23:40", () => {alarm.printAlarms(); alarm.stop(); alarm.clearAlarms(); alarm.printAlarms();}, 3);
     alarm.printAlarms();
-    console.log("testcase end");
 }
 
 testCase();
